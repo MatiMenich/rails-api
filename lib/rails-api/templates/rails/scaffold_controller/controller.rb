@@ -1,6 +1,6 @@
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
-  before_action <%=":set_#{singular_table_name}">, only: [:show, :edit, :update, :destroy]
+  before_action <%=":set_#{singular_table_name}"%>, only: [:show, :edit, :update, :destroy]
   
   # GET <%= route_url %>
   # GET <%= route_url %>.json
