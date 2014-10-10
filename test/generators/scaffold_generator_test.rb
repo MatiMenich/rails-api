@@ -43,28 +43,30 @@ class ScaffoldGeneratorTest < Rails::Generators::TestCase
       end
 
       assert_instance_method :show, content do |m|
-        assert_match(/@product_line = ProductLine\.find\(params\[:id\]\)/, m)
+        assert_match(/render json: @product_line/, m)
       end
 
       assert_instance_method :create, content do |m|
-        assert_match(/@product_line = ProductLine\.new\(params\[:product_line\]\)/, m)
+        assert_match(/@product_line = ProductLine\.new\(product_line_params\)/, m)
         assert_match(/@product_line\.save/, m)
         assert_match(/@product_line\.errors/, m)
       end
 
       assert_instance_method :update, content do |m|
-        assert_match(/@product_line = ProductLine\.find\(params\[:id\]\)/, m)
         if rails4?
-          assert_match(/@product_line\.update\(params\[:product_line\]\)/, m)
+          assert_match(/@product_line\.update\(product_line_params\)/, m)
         else
-          assert_match(/@product_line\.update_attributes\(params\[:product_line\]\)/, m)
+          assert_match(/@product_line\.update_attributes\(product_line_params\)/, m)
         end
         assert_match(/@product_line\.errors/, m)
       end
 
       assert_instance_method :destroy, content do |m|
-        assert_match(/@product_line = ProductLine\.find\(params\[:id\]\)/, m)
         assert_match(/@product_line\.destroy/, m)
+      end
+
+      assert_instance_method :set_product_line, content do |m|
+        assert_match(/@product_line = ProductLine\.find\(params\[:id\]\)/, m)
       end
 
       assert_instance_method :product_line_params, content do |m|
